@@ -10,18 +10,13 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BusScheduleDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(busSchedule: BusSchedule)
-    @Update
-    suspend fun update(busSchedule: BusSchedule)
-    @Delete
-    suspend fun delete(busSchedule: BusSchedule)
+
     @Query("SELECT * from busSchedules WHERE id = :id")
     fun getItem(id: Int): Flow<BusSchedule>
     @Query("SELECT * from busschedules ORDER BY arrivalTime ASC")
     fun getAll(): Flow<List<BusSchedule>>
     @Query("SELECT * from busschedules ORDER BY stopName ASC")
     fun getAllByName(): Flow<List<BusSchedule>>
-    @Query("SELECT * from busschedules WHERE stopName = :name")
-    fun getByName(name: String): Flow<List<BusSchedule>>
+    @Query("SELECT * from busschedules WHERE stopName = :stopName")
+    fun getByName(stopName: String): Flow<List<BusSchedule>>
 }
